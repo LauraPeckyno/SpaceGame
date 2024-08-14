@@ -14,9 +14,15 @@ class Player {
             console.log(`${enemy.name}'s hull was at ${enemy.hull}`)  // prior state for hull
             enemy.hull -= damage; /// minus damage
             console.log(`${this.name} deals ${damage} damage to ${enemy.name}!`);  // logging the damage
+            if (enemy.hull <= 0) {
+                console.log(`You have defeated ${enemy.name}!`)
+            } else {
             console.log(`${enemy.name}'s remaining hull is now ${enemy.hull}`); // logging prior hull minus damage = current hull
+            console.log(`It's now ${enemy.name}'s turn.`);
+            }
         } else {
             console.log(`${this.name} misses ${enemy.name}!`);  // if no, then miss
+            console.log(`It's now ${enemy.name}'s turn.`);
         }
     };
 }  /// duplicating the attack from the enemy side to the player side
@@ -38,21 +44,26 @@ class Enemy {
             console.log(`${player.name}'s hull was at ${player.hull}`)  // prior state for player hull
             player.hull -= damage; /// player hull minus damage
             console.log(`${this.name} deals ${damage} to ${player.name}!`);  // damage logged
-            console.log(`${player.name}'s hull is now at ${player.hull}`)  // hull state after damage
+            if (player.hull <= 0) {
+                console.log(`You have been defeated by ${enemy.name}! Womp... womp...`)
+            } else {
+            console.log(`${player.name}'s remaining hull is now ${player.hull}`); // logging prior hull minus damage = current hull
+            console.log(`It's now ${player.name}'s turn.`);
+            }
         } else {
             console.log(`${this.name} misses ${player.name}!`);  // if no, then miss
+            console.log(`It's now ${player.name}'s turn.`);
         }
     };
 }
 // how should I assign the baddie class stats for each enemy? I guess it should be random.
 // how to track each enemy from round to round?
-// need to add a defeat state for both the enemy and player
+// need to add a defeat state for both the enemy and player  if hull <=0, defeat
 // if player wins, how to move to next baddie?
 
 const laura = new Player("laura", 20, 5, 0.7);
 const baddie = new Enemy("baddie", 4, 3, 0.6);
 
-// now, I need to track the hull when it takes damage
 
 /// from the assignment brief ---function to determine hit accuracy
 // if (Math.random() < Enemy[0].accuracy) {
