@@ -1,0 +1,23 @@
+.stage {
+    border:solid red;
+    display:flex;
+    justify-content: space-between;
+}
+.action {
+    border:solid purple;
+    width: 30%;
+    height:20vh;
+    text-align: center;
+}
+.player {
+    border:solid green;
+    width: 30%;
+    height:20vh;
+    text-align: center;
+}
+.enemy {
+    border:solid blue;
+    width: 30%;
+    height:20vh;
+    text-align: center;
+}
