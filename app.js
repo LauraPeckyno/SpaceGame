@@ -5,15 +5,18 @@ class Player {
         this.firepower = firepower;
         this.accuracy = accuracy;
     }
-    attack() {
+    attack(enemy) {
         const roll = Math.random();
         if (roll <= this.accuracy) {
-            console.log(`${this.name} hits ${Enemy.name}!`); // is your roll less than your accuracy? 
-            const damage = Math.floor(Math.random() * this.firepower) + 1;
-            Enemy.hull -= damage;
-            console.log(`${this.name} deals ${damage} damage to ${Enemy.name}!`);  // damage
+            console.log(`${this.name} hits ${enemy.name}!`); // is your roll less than your accuracy? 
+            // if yes, then roll for damage
+            const damage = Math.floor(Math.random() * this.firepower) + 1; /// the math random generates a decimal, which we need to multiply with our accuracy. The result is then rounded and we add 1 to make sure it's at least as much as the least amt of damage.
+            console.log(`${enemy.name}'s hull was at ${enemy.hull}`)  // prior state for hull
+            enemy.hull -= damage; /// minus damage
+            console.log(`${this.name} deals ${damage} damage to ${enemy.name}!`);  // logging the damage
+            console.log(`${enemy.name}'s remaining hull is now ${enemy.hull}`); // logging prior hull minus damage = current hull
         } else {
-            console.log(`${this.name} misses ${Enemy.name}!`);  // if no, then miss
+            console.log(`${this.name} misses ${enemy.name}!`);  // if no, then miss
         }
     };
 }  /// duplicating the attack from the enemy side to the player side
@@ -25,25 +28,31 @@ class Enemy {
         this.firepower = firepower;
         this.accuracy = accuracy;
     }
-    attack() {
+    attack(player) {
         // random roll to see if you hit
         const roll = Math.random();
         if (roll <= this.accuracy) {
-            console.log(`${this.name} damages ${Player.name}!`); // is your roll less than your accuracy? 
+            console.log(`${this.name} hits ${player.name}!`); // is your roll less than your accuracy? 
             // if yes, then roll for damage
             const damage = Math.floor(Math.random() * this.firepower) + 1;  // random number decimal times the firepower, then rounded. add 1 to ensure it's the minimum amount of damage to hit.
-            Player.hull -= damage;
-            console.log(`${this.name} hits ${Player.name} for ${damage}!`);  // damage logged
+            console.log(`${player.name}'s hull was at ${player.hull}`)  // prior state for player hull
+            player.hull -= damage; /// player hull minus damage
+            console.log(`${this.name} deals ${damage} to ${player.name}!`);  // damage logged
+            console.log(`${player.name}'s hull is now at ${player.hull}`)  // hull state after damage
         } else {
-            console.log(`${this.name} misses ${Player.name}!`);  // if no, then miss
+            console.log(`${this.name} misses ${player.name}!`);  // if no, then miss
         }
     };
 }
+// how should I assign the baddie class stats for each enemy? I guess it should be random.
+// how to track each enemy from round to round?
+// need to add a defeat state for both the enemy and player
+// if player wins, how to move to next baddie?
 
 const laura = new Player("laura", 20, 5, 0.7);
 const baddie = new Enemy("baddie", 4, 3, 0.6);
 
-
+// now, I need to track the hull when it takes damage
 
 /// from the assignment brief ---function to determine hit accuracy
 // if (Math.random() < Enemy[0].accuracy) {
