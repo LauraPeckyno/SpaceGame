@@ -45,7 +45,7 @@ class Enemy {
             player.hull -= damage; /// player hull minus damage
             console.log(`${this.name} deals ${damage} to ${player.name}!`);  // damage logged
             if (player.hull <= 0) {
-                console.log(`You have been defeated by ${enemy.name}! Womp... womp...`)
+                console.log(`You have been defeated by ${this.name}! Womp... womp...`)
             } else {
             console.log(`${player.name}'s remaining hull is now ${player.hull}`); // logging prior hull minus damage = current hull
             console.log(`It's now ${player.name}'s turn.`);
@@ -56,13 +56,19 @@ class Enemy {
         }
     };
 }
+
+const laura = new Player("laura", 20, 5, 0.7);
+const baddie = new Enemy("baddie", 4, 3, 0.6);
+
+////notes/////
+//////////////
+
 // how should I assign the baddie class stats for each enemy? I guess it should be random.
 // how to track each enemy from round to round?
 // need to add a defeat state for both the enemy and player  if hull <=0, defeat
 // if player wins, how to move to next baddie?
 
-const laura = new Player("laura", 20, 5, 0.7);
-const baddie = new Enemy("baddie", 4, 3, 0.6);
+// add isAlive to Class?
 
 
 /// from the assignment brief ---function to determine hit accuracy
