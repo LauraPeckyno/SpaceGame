@@ -114,3 +114,12 @@ const baddie = new Enemy("baddie", 4, 3, 0.6);
 // If you retreat, the game is over, perhaps leaving the game open for further developments or options
 // You win the game if you destroy all of the aliens
 // You lose the game if you are destroyed
+
+
+// potential functions for enemy randomization
+//
+// Math.floor(Math.random() * 4) + 3;    // 3-6
+// Math.floor(Math.random() * 3) + 2;    // 2-4
+// (Math.floor(Math.random() * 3) + 6) / 10;    // 0.6-0.8
+// 
+//
