@@ -35,6 +35,11 @@
     height: 25px;
     border-radius: 12px;
 }
+.attack:hover {
+    border:solid black;
+    background-color: rgb(255, 5, 242);
+    color:white;
+}
 .retreat {
     border:solid black;
     background-color: crimson;
@@ -43,6 +48,11 @@
     width: 150px;
     height: 25px;
     border-radius: 12px;
+}
+.retreat:hover {
+    border:solid black;
+    background-color: rgb(36, 248, 8);
+    color:white;
 }
 .start {
     border:solid black;
@@ -53,6 +63,11 @@
     height: 25px;
     border-radius: 12px;
 }
+.start:hover {
+    border:solid black;
+    background-color: rgb(29, 11, 196);
+    color:white;
+}
 .instructions {
     border:solid black;
     background-color: crimson;
@@ -62,8 +77,13 @@
     height: 25px;
     border-radius: 12px;
 }
+.instructions:hover {
+    border:solid black;
+    background-color: orange;
+    color:white;
+}
 .round {
-    border:solid orange;
+    border:solid rgb(0, 0, 0);
     background-color: orange;
     color: white;
     width: 30%;
@@ -88,4 +108,7 @@
     height:20vh;
     text-align: center;
     display:none;
+}
+.enemyToken {
+
 }

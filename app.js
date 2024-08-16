@@ -1,14 +1,33 @@
+// set up the variables
+let roundNumber = 0;  // for the round toggle
+let enemyNumbers = 6;  // sets initial number of enemies
+let enemies = [];  // array to hold enemy objects
+let currentEnemy;  // variable to hold the current enemy
+let player;  // variable to hold the player object
+
+// add listener event for start game button
+// triggers creation of enemies, add player and enemies to stage
+// maybe hide attack button until after game start?
+
+const newGameBtn = document.querySelector(".start"); // start game button
+const attackBtn = document.querySelector(".attack"); // attack button
+const retreatBtn = document.querySelector(".retreat"); // retreat button
+newGameBtn.addEventListener("click", startGame);
+attackBtn.addEventListener("click", playerAttack);
+retreatBtn.addEventListener("click", giveUp);
+
 class Player {
     constructor(name, hull, firepower, accuracy) {
         this.name = name;
         this.hull = hull;
         this.firepower = firepower;
         this.accuracy = accuracy;
-        this.alive;
+        this.alive = true;
+        this.playerAttack = this.playerAttack.bind(this)
     }
-    attack(enemy) {
-        const roll = Math.random();
-        if (roll <= this.accuracy) {
+    playerAttack(enemy) {
+        const playerRoll = Math.random();
+        if (playerRoll <= this.accuracy) {
             console.log(`${this.name} hits ${enemy.name}!`); // is your roll less than your accuracy? 
             // if yes, then roll for damage
             const damage = Math.floor(Math.random() * this.firepower) + 1; /// the math random generates a decimal, which we need to multiply with our accuracy. The result is then rounded and we add 1 to make sure it's at least as much as the least amt of damage.
@@ -21,13 +40,22 @@ class Player {
                 // toggle round to next 
                 // if # enemies > 0, next enemy
                 // if # enemies <= 0, display winner! end game
+                if (enemies.length > 0) {
+                    currentEnemy = enemies.shift();
+                    console.log(`Next enemy: ${currentEnemy.name}`);
+                } else {
+                    console.log(`You won!`);
+                    attackBtn.disabled = true;
+                }
             } else {
             console.log(`${enemy.name}'s remaining hull is now ${enemy.hull}`); // logging prior hull minus damage = current hull
             console.log(`It's now ${enemy.name}'s turn.`);
+            enemy.enemyAttack(player);
             }
         } else {
             console.log(`${this.name} misses ${enemy.name}!`);  // if no, then miss
             console.log(`It's now ${enemy.name}'s turn.`);
+            enemy.enemyAttack(player);
         }
     };
 }  /// duplicating the attack from the enemy side to the player side
@@ -38,12 +66,13 @@ class Enemy {
         this.hull = hull;
         this.firepower = firepower;
         this.accuracy = accuracy;
-        this.alive;
+        this.alive = true;
+        this.enemyAttack = this.enemyAttack.bind(this)
     }
-    attack(player) {
+    enemyAttack(player) {
         // random roll to see if you hit
-        const roll = Math.random();
-        if (roll <= this.accuracy) {
+        const enemyRoll = Math.random();
+        if (enemyRoll <= this.accuracy) {
             console.log(`${this.name} hits ${player.name}!`); // is your roll less than your accuracy? 
             // if yes, then roll for damage
             const damage = Math.floor(Math.random() * this.firepower) + 1;  // random number decimal times the firepower, then rounded. add 1 to ensure it's the minimum amount of damage to hit.
@@ -54,6 +83,7 @@ class Enemy {
                 player.alive = false; // defeat state means alive = false
                 console.log(`You have been defeated by ${this.name}! Womp... womp...`)
                 // display defeat - end game
+                attackBtn.style.display = "block";
             } else {
             console.log(`${player.name}'s remaining hull is now ${player.hull}`); // logging prior hull minus damage = current hull
             console.log(`It's now ${player.name}'s turn.`);
@@ -65,8 +95,32 @@ class Enemy {
     };
 }
 
-const laura = new Player("laura", 20, 5, 0.7, true);
-const baddie = new Enemy("baddie", 4, 3, 0.6, true);
+function startGame() {
+    player = new Player("laura", 20, 5, 0.7);
+    const hullRandom = () => Math.floor(Math.random() * 4) + 3;   // 3-6 hull
+    const firepowerRandom = () => Math.floor(Math.random() * 3) + 2;    // 2-4 firepower
+    const accuracyRandom = () => (Math.floor(Math.random() * 3) + 6) / 10;    // 0.6-0.8 accuracy
+    for (let i = 0; i < enemyNumbers; i++) {
+        const hull = hullRandom();
+        const firepower = firepowerRandom();
+        const accuracy = accuracyRandom();
+        enemies.push(new Enemy(`baddie${i}`, hull, firepower, accuracy));
+    };
+    currentEnemy = enemies.shift();
+    console.log(`First enemy: ${currentEnemy.name} is ready`);
+    attackBtn.disabled = false;
+    newGameBtn.disabled = true;
+}
+
+function playerAttack() {
+    player.playerAttack(currentEnemy);
+}
+
+function giveUp() {
+    // need prompt to make sure they want to give up
+    // retreat message
+    // hit the start game to try again
+}
 
 ////notes/////
 //////////////
@@ -75,7 +129,6 @@ const baddie = new Enemy("baddie", 4, 3, 0.6, true);
 // trigger using the game start button
 // use trigger event to run function to get name, random stats
 // i don't need to set the class values for everyone at the start. let's randomize for each round
-// tracking the death now happens with the alive boolean
 // this is where the round toggle might work
 
 
