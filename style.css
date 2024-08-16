@@ -62,3 +62,30 @@
     height: 25px;
     border-radius: 12px;
 }
+.round {
+    border:solid orange;
+    background-color: orange;
+    color: white;
+    width: 30%;
+    height:20vh;
+    text-align: center;
+    display:none;
+}
+.gameOver {
+    border:solid red;
+    background-color: red;
+    color: white;
+    width: 30%;
+    height:20vh;
+    text-align: center;
+    display:none;
+}
+.winner {
+    border:solid greenyellow;
+    background-color: greenyellow;
+    color: black;
+    width: 30%;
+    height:20vh;
+    text-align: center;
+    display:none;
+}

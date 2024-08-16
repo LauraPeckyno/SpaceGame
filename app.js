@@ -16,8 +16,11 @@ class Player {
             enemy.hull -= damage; /// minus damage
             console.log(`${this.name} deals ${damage} damage to ${enemy.name}!`);  // logging the damage
             if (enemy.hull <= 0) {
-                enemy.alive = false;
+                enemy.alive = false; // defeat state means alive = false
                 console.log(`You have defeated ${enemy.name}!`)
+                // toggle round to next 
+                // if # enemies > 0, next enemy
+                // if # enemies <= 0, display winner! end game
             } else {
             console.log(`${enemy.name}'s remaining hull is now ${enemy.hull}`); // logging prior hull minus damage = current hull
             console.log(`It's now ${enemy.name}'s turn.`);
@@ -48,8 +51,9 @@ class Enemy {
             player.hull -= damage; /// player hull minus damage
             console.log(`${this.name} deals ${damage} to ${player.name}!`);  // damage logged
             if (player.hull <= 0) {
-                player.alive = false;
+                player.alive = false; // defeat state means alive = false
                 console.log(`You have been defeated by ${this.name}! Womp... womp...`)
+                // display defeat - end game
             } else {
             console.log(`${player.name}'s remaining hull is now ${player.hull}`); // logging prior hull minus damage = current hull
             console.log(`It's now ${player.name}'s turn.`);
