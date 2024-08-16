@@ -21,3 +21,44 @@
     height:20vh;
     text-align: center;
 }
+.controls {
+    border:solid orange;
+    display:flex;
+    justify-content: space-between;
+}
+.attack {
+    border:solid black;
+    background-color: crimson;
+    color:White;
+    text-align: center;
+    width: 150px;
+    height: 25px;
+    border-radius: 12px;
+}
+.retreat {
+    border:solid black;
+    background-color: crimson;
+    color:White;
+    text-align: center;
+    width: 150px;
+    height: 25px;
+    border-radius: 12px;
+}
+.start {
+    border:solid black;
+    background-color: crimson;
+    color:White;
+    text-align: center;
+    width: 150px;
+    height: 25px;
+    border-radius: 12px;
+}
+.instructions {
+    border:solid black;
+    background-color: crimson;
+    color:White;
+    text-align: center;
+    width: 150px;
+    height: 25px;
+    border-radius: 12px;
+}

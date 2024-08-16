@@ -63,12 +63,29 @@ const baddie = new Enemy("baddie", 4, 3, 0.6);
 ////notes/////
 //////////////
 
-// how should I assign the baddie class stats for each enemy? I guess it should be random.
-// how to track each enemy from round to round?
-// need to add a defeat state for both the enemy and player  if hull <=0, defeat
-// if player wins, how to move to next baddie?
 
-// add isAlive to Class?
+// need buttons to trigger start, attack, retreat, instructions
+
+
+// what if the round counter is a visualization of the enemeies left?
+
+// how should I assign the baddie class stats for each enemy? I guess it should be random.
+// potential functions for enemy randomization
+// Math.floor(Math.random() * 3) + 2;    // 2-4 firepower?
+// Math.floor(Math.random() * 4) + 3;    // 3-6 hull?
+// (Math.floor(Math.random() * 3) + 6) / 10;    // 0.6-0.8 accuracy for enemy?
+
+// how to add enemies to the initial board?
+
+// how to track each enemy from round to round? 
+// on defeat, remove current baddie from group, get next one
+
+// if player wins, how to move to next baddie?
+// round toggle? 
+
+// add isAlive to Class?  yes
+
+//health counter/bar?
 
 
 /// from the assignment brief ---function to determine hit accuracy
@@ -116,10 +133,3 @@ const baddie = new Enemy("baddie", 4, 3, 0.6);
 // You lose the game if you are destroyed
 
 
-// potential functions for enemy randomization
-//
-// Math.floor(Math.random() * 4) + 3;    // 3-6
-// Math.floor(Math.random() * 3) + 2;    // 2-4
-// (Math.floor(Math.random() * 3) + 6) / 10;    // 0.6-0.8
-// 
-//
