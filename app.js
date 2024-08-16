@@ -4,6 +4,7 @@ class Player {
         this.hull = hull;
         this.firepower = firepower;
         this.accuracy = accuracy;
+        this.alive;
     }
     attack(enemy) {
         const roll = Math.random();
@@ -15,6 +16,7 @@ class Player {
             enemy.hull -= damage; /// minus damage
             console.log(`${this.name} deals ${damage} damage to ${enemy.name}!`);  // logging the damage
             if (enemy.hull <= 0) {
+                enemy.alive = false;
                 console.log(`You have defeated ${enemy.name}!`)
             } else {
             console.log(`${enemy.name}'s remaining hull is now ${enemy.hull}`); // logging prior hull minus damage = current hull
@@ -33,6 +35,7 @@ class Enemy {
         this.hull = hull;
         this.firepower = firepower;
         this.accuracy = accuracy;
+        this.alive;
     }
     attack(player) {
         // random roll to see if you hit
@@ -45,6 +48,7 @@ class Enemy {
             player.hull -= damage; /// player hull minus damage
             console.log(`${this.name} deals ${damage} to ${player.name}!`);  // damage logged
             if (player.hull <= 0) {
+                player.alive = false;
                 console.log(`You have been defeated by ${this.name}! Womp... womp...`)
             } else {
             console.log(`${player.name}'s remaining hull is now ${player.hull}`); // logging prior hull minus damage = current hull
@@ -57,17 +61,19 @@ class Enemy {
     };
 }
 
-const laura = new Player("laura", 20, 5, 0.7);
-const baddie = new Enemy("baddie", 4, 3, 0.6);
+const laura = new Player("laura", 20, 5, 0.7, true);
+const baddie = new Enemy("baddie", 4, 3, 0.6, true);
 
 ////notes/////
 //////////////
 
+// how to set up the initial 6 bad guys?
+// trigger using the game start button
+// use trigger event to run function to get name, random stats
+// i don't need to set the class values for everyone at the start. let's randomize for each round
+// tracking the death now happens with the alive boolean
+// this is where the round toggle might work
 
-// need buttons to trigger start, attack, retreat, instructions
-
-
-// what if the round counter is a visualization of the enemeies left?
 
 // how should I assign the baddie class stats for each enemy? I guess it should be random.
 // potential functions for enemy randomization
@@ -75,10 +81,22 @@ const baddie = new Enemy("baddie", 4, 3, 0.6);
 // Math.floor(Math.random() * 4) + 3;    // 3-6 hull?
 // (Math.floor(Math.random() * 3) + 6) / 10;    // 0.6-0.8 accuracy for enemy?
 
-// how to add enemies to the initial board?
+// testing function to pick a random enemy name for the alien. Is this even necessary?
+// function getEnemyName() {
+//     const enemyNames = [
+//       "baddie1",
+//       "baddie2",
+//       "baddie3",
+//       "baddie4",
+//       "baddie5",
+//       "baddie6",
+//     ];
+//     return enemyNames[Math.floor(Math.random() * enemyNames.length)]; // random number times the number of enemy names, rounded to integer, snag that name from the list
+//   }
 
 // how to track each enemy from round to round? 
-// on defeat, remove current baddie from group, get next one
+// on defeat, remove current baddie from group, get next one?
+// what if the round counter is a visualization of the enemeies left?
 
 // if player wins, how to move to next baddie?
 // round toggle? 
