@@ -1,3 +1,13 @@
+///notes///
+///////////
+/// I've decided to reskin this as a fishing game. 
+/// Instead of it being hull integrity, those values will become stamina. 
+/// With each attempted catch, you will potentially lose stamina.
+/// if you lose too much stamina, you give up on the fishing and go home.
+/// if you catch all six fish in the pond, you win.
+/// I'll be reworking the graphics and language to fit this new scenario. It just feels better than a space shoot em up.
+
+
 // set up the variables
 let roundNumber = 0;  // for the round toggle
 let enemyNumbers = 6;  // sets initial number of enemies
@@ -9,13 +19,22 @@ let player;  // variable to hold the player object
 // triggers creation of enemies, add player and enemies to stage
 // maybe hide attack button until after game start?
 
+// buttons
 const newGameBtn = document.querySelector(".start"); // start game button
 const attackBtn = document.querySelector(".attack"); // attack button
 const retreatBtn = document.querySelector(".retreat"); // retreat button
+const instuctBtn = document.querySelector(".instructions"); // instructions button
+// window panes
+const actionPane = document.querySelector(".action"); // action pane
+const playerPane = document.querySelector(".player"); // player pane
+const enemyPane = document.querySelector(".enemy"); // enemy pane
+// event listeners
 newGameBtn.addEventListener("click", startGame);
 attackBtn.addEventListener("click", playerAttack);
 retreatBtn.addEventListener("click", giveUp);
+instuctBtn.addEventListener("click", instructions);
 
+/// build the classes: player and enemy
 class Player {
     constructor(name, hull, firepower, accuracy) {
         this.name = name;
@@ -32,29 +51,35 @@ class Player {
             // if yes, then roll for damage
             const damage = Math.floor(Math.random() * this.firepower) + 1; /// the math random generates a decimal, which we need to multiply with our accuracy. The result is then rounded and we add 1 to make sure it's at least as much as the least amt of damage.
             console.log(`${enemy.name}'s hull was at ${enemy.hull}`)  // prior state for hull
+            // send this to the actions pane
             enemy.hull -= damage; /// minus damage
             console.log(`${this.name} deals ${damage} damage to ${enemy.name}!`);  // logging the damage
             if (enemy.hull <= 0) {
                 enemy.alive = false; // defeat state means alive = false
                 console.log(`You have defeated ${enemy.name}!`)
+                // send this to the actions pane?
                 // toggle round to next 
                 // if # enemies > 0, next enemy
                 // if # enemies <= 0, display winner! end game
                 if (enemies.length > 0) {
                     currentEnemy = enemies.shift();
                     console.log(`Next enemy: ${currentEnemy.name}`);
+                    // send this to the actions pane
                 } else {
                     console.log(`You won!`);
+                    // send this to the actions pane
                     attackBtn.disabled = true;
                 }
             } else {
             console.log(`${enemy.name}'s remaining hull is now ${enemy.hull}`); // logging prior hull minus damage = current hull
             console.log(`It's now ${enemy.name}'s turn.`);
+            // send this to the actions pane
             enemy.enemyAttack(player);
             }
         } else {
             console.log(`${this.name} misses ${enemy.name}!`);  // if no, then miss
             console.log(`It's now ${enemy.name}'s turn.`);
+            // send this to the actions pane
             enemy.enemyAttack(player);
         }
     };
@@ -74,27 +99,34 @@ class Enemy {
         const enemyRoll = Math.random();
         if (enemyRoll <= this.accuracy) {
             console.log(`${this.name} hits ${player.name}!`); // is your roll less than your accuracy? 
+            // send this to the actions pane
             // if yes, then roll for damage
             const damage = Math.floor(Math.random() * this.firepower) + 1;  // random number decimal times the firepower, then rounded. add 1 to ensure it's the minimum amount of damage to hit.
             console.log(`${player.name}'s hull was at ${player.hull}`)  // prior state for player hull
+            // send this to the actions pane
             player.hull -= damage; /// player hull minus damage
             console.log(`${this.name} deals ${damage} to ${player.name}!`);  // damage logged
+            // send this to the actions pane
             if (player.hull <= 0) {
                 player.alive = false; // defeat state means alive = false
                 console.log(`You have been defeated by ${this.name}! Womp... womp...`)
                 // display defeat - end game
+                // send this to the actions pane
                 attackBtn.style.display = "block";
             } else {
             console.log(`${player.name}'s remaining hull is now ${player.hull}`); // logging prior hull minus damage = current hull
             console.log(`It's now ${player.name}'s turn.`);
+            // send this to the actions pane
             }
         } else {
             console.log(`${this.name} misses ${player.name}!`);  // if no, then miss
             console.log(`It's now ${player.name}'s turn.`);
+            // send this to the actions pane
         }
     };
-}
+};
 
+// way to start the game
 function startGame() {
     player = new Player("laura", 20, 5, 0.7);
     const hullRandom = () => Math.floor(Math.random() * 4) + 3;   // 3-6 hull
@@ -108,18 +140,25 @@ function startGame() {
     };
     currentEnemy = enemies.shift();
     console.log(`First enemy: ${currentEnemy.name} is ready`);
+    
     attackBtn.disabled = false;
     newGameBtn.disabled = true;
-}
+};
 
+// way to attack. Will be the players attack, then the enemy attack will follow automatically
 function playerAttack() {
     player.playerAttack(currentEnemy);
 }
 
+// retreat function
 function giveUp() {
     // need prompt to make sure they want to give up
     // retreat message
     // hit the start game to try again
+}
+
+function instructions() {
+    // need popup window with game instructions
 }
 
 ////notes/////
