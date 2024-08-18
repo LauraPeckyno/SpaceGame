@@ -10,54 +10,79 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <div class="CTA"><h1>Let's catch some fish!</h1></div> 
-<div class="stage">
-<div class="action">Actions
-    <div id="confirmation-window">
-        <p>Are you sure you want to reset the game?</p>
-        <button id="confirm-btn">OK</button>
-        <button id="cancel-btn">Cancel</button>
-    </div>
-    <div class="round">Attack Round</div>
-    <div class="gameOver">Game Over</div>
-    <div class="winner">You Win!</div>
-</div>
-<div class="fish">Fish
-    <div id="fish1">
-        <img src="https://www.pecknotes.com/black%20snapper.gif" height="250px" width="250px">
-    </div>
-    <div id="fish2">
-        <img src="https://www.pecknotes.com/black%20snapper.gif" height="250px" width="250px">
-    </div>
-    <div id="fish3">
-        <img src="https://www.pecknotes.com/black%20snapper.gif" height="250px" width="250px">
-    </div>
-    <div id="fish4">
-        <img src="https://www.pecknotes.com/black%20snapper.gif" height="250px" width="250px">
-    </div>
-    <div id="fish5">
-        <img src="https://www.pecknotes.com/black%20snapper.gif" height="250px" width="250px">
-    </div>
-    <div id="fish6">
-        <img src="https://www.pecknotes.com/black%20snapper.gif" height="250px" width="250px">
-    </div>
-</div>
-</div>
-<div class="controls">
-    <div class="start">
-New Game
-    </div>
-    <div class="attack">
-Cast & Reel
-    </div>
-    <div class="retreat">
-Give Up
-    </div>
-    <div class="instructions">
-Instructions        
-    </div>
-</div>
-        
+        <h1>Let's catch some fish!</h1>
+        <div class="CTA">
+
+            <div class="controls">
+                <div class="start">
+                    NEW GAME
+                </div>
+                <div class="attack">
+                    CAST & REEL
+                </div>
+                <div class="retreat">
+                    GIVE UP
+                </div>
+                <div class="instructions">
+                    INSTRUCTIONS
+                </div>
+                <div class="reset">
+                    RESET
+                </div>
+            </div>
+        </div>
+        <div class="stage">
+            <div class="action"><h1>LET'S FISH!</h1>
+                <div id="confirmation-window">
+                    <p>Are you sure you want to reset the game?</p>
+                    <button id="confirm-btn">OK</button>
+                    <button id="cancel-btn">Cancel</button>
+                </div>
+                <div class="round">
+                    <div class="dock">
+                    <img src="https://www.pecknotes.com/wp-content/uploads/2024/08/dock-1024x802.png" width="400px"></div>
+                </div>
+                        <div id="instructions-popup" style="display: none;">
+                            <h2>Game Instructions</h2>
+                            <p>Are you ready to fish? Your goal is to catch 6 fish for dinner.</p>
+                            <p>To play, click the "Cast & Reel" button to cast your line. If you get a bite, you'll have to reel the fish in by clicking the "Cast & Reel" button again.</p>
+                            <p>If the fish swims away, you'll lose some stamina. If you run out of stamina before you catch enough fish, the game is over.</p>
+                            <p>You can retreat from the game at any time by clicking the "Give Up" button.</p>
+                            <p>You can reset your game with the "Reset" button.</p>
+                            <button id="close-instructions-btn">Close</button>
+                        </div>
+                        <div class="bobber"><img
+                            src="https://i.pinimg.com/originals/66/18/5b/66185bec5d99a004b0c9d552d82553d6.gif"
+                            width="400px"></div>
+            </div>
+            <div class="fish"><h1>THE POND</h1>
+                <div id="fish1">
+                    <img src="https://www.pecknotes.com/black%20snapper.gif"
+                        height="150px" width="150px">
+                </div>
+                <div id="fish2">
+                    <img src="https://www.pecknotes.com/black%20snapper.gif"
+                        height="150px" width="150px">
+                </div>
+                <div id="fish3">
+                    <img src="https://www.pecknotes.com/black%20snapper.gif"
+                        height="150px" width="150px">
+                </div>
+                <div id="fish4">
+                    <img src="https://www.pecknotes.com/black%20snapper.gif"
+                        height="150px" width="150px">
+                </div>
+                <div id="fish5">
+                    <img src="https://www.pecknotes.com/black%20snapper.gif"
+                        height="150px" width="150px">
+                </div>
+                <div id="fish6">
+                    <img src="https://www.pecknotes.com/black%20snapper.gif"
+                        height="150px" width="150px">
+                </div>
+            </div>
+        </div>
+
         <script src="app.js" async defer></script>
     </body>
 </html>
