@@ -1,25 +1,80 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+}
 .stage {
-    border:solid red;
     display:flex;
     justify-content: space-between;
 }
+#confirmation-window {
+    display: none;
+    border:solid red;
+    background-color: white;
+}
+#confirm-btn {
+    border:solid red;
+    color: white;
+    background-color: red;
+}
+#cancel-btn {
+    border:solid red;
+    color: white;
+    background-color: red;
+}
 .action {
     border:solid purple;
-    width: 30%;
-    height:20vh;
+    border-radius: 30px;
+    display: flex;
+    padding: 125px;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    width: 50%;
     text-align: center;
+    background-image: url("https://i.pinimg.com/originals/66/18/5b/66185bec5d99a004b0c9d552d82553d6.gif");
+    background-size: contain;
+    background-repeat: no-repeat;
 }
-.player {
-    border:solid green;
-    width: 30%;
-    height:20vh;
-    text-align: center;
-}
-.enemy {
+.fish {
     border:solid blue;
-    width: 30%;
-    height:20vh;
+    border-radius: 30px;
+    display: flex;
+    padding: 125px;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    width: 50%;
     text-align: center;
+    background-image: url("https://img.freepik.com/premium-vector/water-waves-background_80590-6174.jpg");
+    background-size: cover;
+
+}
+#fish1 {
+    width: 250px;
+    height: 250px;
+    display:block;
+}
+#fish2 {
+    width: 250px;
+    height: 250px;
+    display:block;
+}
+#fish3 {
+    width: 250px;
+    height: 250px;
+    display:block;
+}
+#fish4 {
+    width: 250px;
+    height: 250px;
+    display:block;
+}
+#fish5 {
+    width: 250px;
+    height: 250px;
+    display:block;
+}
+#fish6 {
+    width: 250px;
+    height: 250px;
+    display:block;
 }
 .controls {
     border:solid orange;
@@ -62,11 +117,13 @@
     width: 150px;
     height: 25px;
     border-radius: 12px;
+    display: block;
 }
 .start:hover {
     border:solid black;
     background-color: rgb(29, 11, 196);
     color:white;
+    display: block;
 }
 .instructions {
     border:solid black;
@@ -109,6 +166,6 @@
     text-align: center;
     display:none;
 }
-.enemyToken {
-
+.CTA {
+    text-align: center;
 }

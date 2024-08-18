@@ -10,155 +10,174 @@
 
 // set up the variables
 let roundNumber = 0;  // for the round toggle
-let enemyNumbers = 6;  // sets initial number of enemies
-let enemies = [];  // array to hold enemy objects
-let currentEnemy;  // variable to hold the current enemy
+let fishNumbers = 6;  // sets initial number of enemies
+let fishes = [];  // array to hold fish objects
+let currentFish;  // variable to hold the current enemy
 let player;  // variable to hold the player object
-
-// add listener event for start game button
-// triggers creation of enemies, add player and enemies to stage
-// maybe hide attack button until after game start?
 
 // buttons
 const newGameBtn = document.querySelector(".start"); // start game button
-const attackBtn = document.querySelector(".attack"); // attack button
+const castBtn = document.querySelector(".attack"); // attack button
 const retreatBtn = document.querySelector(".retreat"); // retreat button
-const instuctBtn = document.querySelector(".instructions"); // instructions button
+const instructBtn = document.querySelector(".instructions"); // instructions button
 // window panes
 const actionPane = document.querySelector(".action"); // action pane
 const playerPane = document.querySelector(".player"); // player pane
-const enemyPane = document.querySelector(".enemy"); // enemy pane
+const fishPane = document.querySelector(".enemy"); // enemy pane
+
+// reset btns and window
+const confirmationWindow = document.getElementById("confirmation-window");
+const confirmBtn = document.getElementById("confirm-btn");
+const cancelBtn = document.getElementById("cancel-btn");
+
 // event listeners
 newGameBtn.addEventListener("click", startGame);
-attackBtn.addEventListener("click", playerAttack);
+castBtn.addEventListener("click", playerCast);
 retreatBtn.addEventListener("click", giveUp);
-instuctBtn.addEventListener("click", instructions);
+instructBtn.addEventListener("click", instructions);
 
-/// build the classes: player and enemy
+// the fish screen elements
+const fishElements = [
+    document.getElementById('fish1'),
+    document.getElementById('fish2'),
+    document.getElementById('fish3'),
+    document.getElementById('fish4'),
+    document.getElementById('fish5'),
+    document.getElementById('fish6')
+];
+let fishDiv1 = document.getElementById("fish1");
+let fishDiv2 = document.getElementById("fish2");
+let fishDiv3 = document.getElementById("fish3");
+let fishDiv4 = document.getElementById("fish4");
+let fishDiv5 = document.getElementById("fish5");
+let fishDiv6 = document.getElementById("fish6");
+
+// build the classes: player and enemy
 class Player {
-    constructor(name, hull, firepower, accuracy) {
+    constructor(name, stamina, bait, skill) {
         this.name = name;
-        this.hull = hull;
-        this.firepower = firepower;
-        this.accuracy = accuracy;
+        this.stamina = stamina;
+        this.bait = bait;
+        this.skill = skill;
         this.alive = true;
-        this.playerAttack = this.playerAttack.bind(this)
+        this.playerCast = this.playerCast.bind(this);
     }
-    playerAttack(enemy) {
+    playerCast(fish) {
         const playerRoll = Math.random();
-        if (playerRoll <= this.accuracy) {
-            console.log(`${this.name} hits ${enemy.name}!`); // is your roll less than your accuracy? 
-            // if yes, then roll for damage
-            const damage = Math.floor(Math.random() * this.firepower) + 1; /// the math random generates a decimal, which we need to multiply with our accuracy. The result is then rounded and we add 1 to make sure it's at least as much as the least amt of damage.
-            console.log(`${enemy.name}'s hull was at ${enemy.hull}`)  // prior state for hull
-            // send this to the actions pane
-            enemy.hull -= damage; /// minus damage
-            console.log(`${this.name} deals ${damage} damage to ${enemy.name}!`);  // logging the damage
-            if (enemy.hull <= 0) {
-                enemy.alive = false; // defeat state means alive = false
-                console.log(`You have defeated ${enemy.name}!`)
-                // send this to the actions pane?
-                // toggle round to next 
-                // if # enemies > 0, next enemy
-                // if # enemies <= 0, display winner! end game
-                if (enemies.length > 0) {
-                    currentEnemy = enemies.shift();
-                    console.log(`Next enemy: ${currentEnemy.name}`);
-                    // send this to the actions pane
+        if (playerRoll <= this.skill) {
+            console.log(`You have a bite from ${fish.name}!`);
+            const damage = Math.floor(Math.random() * this.bait) + 1;
+            console.log(`${fish.name}'s stamina was at ${fish.stamina}`);
+            fish.stamina -= damage;
+            console.log(`You manage to bring the fish towards you and weaken ${fish.name} by ${damage}!`);
+            if (fish.stamina <= 0) {
+                fish.alive = false;
+                console.log(`You have caught ${fish.name}!`);
+                fishElements.forEach((element, index) => {
+                    if (`fish${index}` === fish.name) {  // check index for current fish
+                        element.style.display = 'none'; // setting it to display none when caught
+                    }
+                });
+
+                if (fishes.length > 0) {
+                    currentFish = fishes.shift();  // Move to the next fish
+                    console.log(`Next fish: ${currentFish.name}`);
                 } else {
-                    console.log(`You won!`);
-                    // send this to the actions pane
-                    attackBtn.disabled = true;
+                    console.log(`You've caught enough fish for dinner! Take a well-earned break!`);
                 }
             } else {
-            console.log(`${enemy.name}'s remaining hull is now ${enemy.hull}`); // logging prior hull minus damage = current hull
-            console.log(`It's now ${enemy.name}'s turn.`);
-            // send this to the actions pane
-            enemy.enemyAttack(player);
+                console.log(`${fish.name}'s remaining stamina is now ${fish.stamina}`);
+                console.log(`The fish on your line is trying to get away! It's now ${fish.name}'s turn.`);
+                fish.fishRun(player);
             }
         } else {
-            console.log(`${this.name} misses ${enemy.name}!`);  // if no, then miss
-            console.log(`It's now ${enemy.name}'s turn.`);
-            // send this to the actions pane
-            enemy.enemyAttack(player);
+            console.log(`You weren't able to reel the fish towards you this time. They are putting up a fight!`);
+            console.log(`It's now ${fish.name}'s turn.`);
+            fish.fishRun(player);
         }
-    };
-}  /// duplicating the attack from the enemy side to the player side
-
-class Enemy {
-    constructor(name, hull, firepower, accuracy) {
-        this.name = name;
-        this.hull = hull;
-        this.firepower = firepower;
-        this.accuracy = accuracy;
-        this.alive = true;
-        this.enemyAttack = this.enemyAttack.bind(this)
     }
-    enemyAttack(player) {
-        // random roll to see if you hit
-        const enemyRoll = Math.random();
-        if (enemyRoll <= this.accuracy) {
-            console.log(`${this.name} hits ${player.name}!`); // is your roll less than your accuracy? 
-            // send this to the actions pane
-            // if yes, then roll for damage
-            const damage = Math.floor(Math.random() * this.firepower) + 1;  // random number decimal times the firepower, then rounded. add 1 to ensure it's the minimum amount of damage to hit.
-            console.log(`${player.name}'s hull was at ${player.hull}`)  // prior state for player hull
-            // send this to the actions pane
-            player.hull -= damage; /// player hull minus damage
-            console.log(`${this.name} deals ${damage} to ${player.name}!`);  // damage logged
-            // send this to the actions pane
-            if (player.hull <= 0) {
-                player.alive = false; // defeat state means alive = false
-                console.log(`You have been defeated by ${this.name}! Womp... womp...`)
-                // display defeat - end game
-                // send this to the actions pane
-                attackBtn.style.display = "block";
+}
+
+class Fish {
+    constructor(name, stamina, hunger, skill) {
+        this.name = name;
+        this.stamina = stamina;
+        this.hunger = hunger;
+        this.skill = skill;
+        this.alive = true;
+        this.fishRun = this.fishRun.bind(this);
+    }
+    fishRun(player) {
+        const fishRoll = Math.random();
+        if (fishRoll <= this.skill) {
+            console.log(`${this.name} runs from ${player.name}!`);
+            const damage = Math.floor(Math.random() * this.hunger) + 1;
+            console.log(`${player.name}'s stamina was at ${player.stamina}`);
+            player.stamina -= damage;
+            console.log(`${this.name} is really tiring you out! You hold onto the line, but your stamina is reduced by ${damage}!`);
+            if (player.stamina <= 0) {
+                player.alive = false;
+                console.log(`Oh no! Your fish got away! You are now so tired that you need a nap. Go home!`);
             } else {
-            console.log(`${player.name}'s remaining hull is now ${player.hull}`); // logging prior hull minus damage = current hull
-            console.log(`It's now ${player.name}'s turn.`);
-            // send this to the actions pane
+                console.log(`Your remaining stamina is now ${player.stamina}`);
+                console.log(`It's time to try to reel that fish in again. ${player.name}'s turn.`);
             }
         } else {
-            console.log(`${this.name} misses ${player.name}!`);  // if no, then miss
+            console.log(`${this.name} tried to run, but you kept them on the line. Try to reel them in again, ${player.name}!`);
             console.log(`It's now ${player.name}'s turn.`);
-            // send this to the actions pane
         }
-    };
-};
+    }
+}
 
 // way to start the game
 function startGame() {
     player = new Player("laura", 20, 5, 0.7);
-    const hullRandom = () => Math.floor(Math.random() * 4) + 3;   // 3-6 hull
-    const firepowerRandom = () => Math.floor(Math.random() * 3) + 2;    // 2-4 firepower
-    const accuracyRandom = () => (Math.floor(Math.random() * 3) + 6) / 10;    // 0.6-0.8 accuracy
-    for (let i = 0; i < enemyNumbers; i++) {
-        const hull = hullRandom();
-        const firepower = firepowerRandom();
-        const accuracy = accuracyRandom();
-        enemies.push(new Enemy(`baddie${i}`, hull, firepower, accuracy));
-    };
-    currentEnemy = enemies.shift();
-    console.log(`First enemy: ${currentEnemy.name} is ready`);
-    
-    attackBtn.disabled = false;
-    newGameBtn.disabled = true;
-};
+    const staminaRandom = () => Math.floor(Math.random() * 4) + 3;
+    const hungerRandom = () => Math.floor(Math.random() * 3) + 2;
+    const skillRandom = () => (Math.floor(Math.random() * 3) + 6) / 10;
+
+    for (let i = 0; i < fishNumbers; i++) {
+        const stamina = staminaRandom();
+        const hunger = hungerRandom();
+        const skill = skillRandom();
+        fishes.push(new Fish(`fish${i}`, stamina, hunger, skill));
+    }
+    currentFish = fishes.shift();
+    console.log(`First fish: ${currentFish.name} is ready`);
+    newGameBtn.style.display = "none"; // start game button hidden
+}
 
 // way to attack. Will be the players attack, then the enemy attack will follow automatically
-function playerAttack() {
-    player.playerAttack(currentEnemy);
+function playerCast() {
+    player.playerCast(currentFish);
 }
 
 // retreat function
 function giveUp() {
-    // need prompt to make sure they want to give up
     // retreat message
     // hit the start game to try again
+    resetGame();
 }
 
 function instructions() {
     // need popup window with game instructions
+}
+
+function resetGame() {
+    confirmationWindow.style.display = "block";
+    confirmBtn.onclick = function () {
+        newGameBtn.style.display = "block"; // show the new game button again
+        fishDiv1.style.display = "block"; // reset all fish elements to display
+        fishDiv2.style.display = "block";
+        fishDiv3.style.display = "block";
+        fishDiv4.style.display = "block";
+        fishDiv5.style.display = "block";
+        fishDiv6.style.display = "block";
+        confirmationWindow.style.display = "none";
+    };
+    cancelBtn.onclick = function () {
+        confirmationWindow.style.display = "none";
+    };
 }
 
 ////notes/////
@@ -190,12 +209,12 @@ function instructions() {
 //     return enemyNames[Math.floor(Math.random() * enemyNames.length)]; // random number times the number of enemy names, rounded to integer, snag that name from the list
 //   }
 
-// how to track each enemy from round to round? 
+// how to track each enemy from round to round?
 // on defeat, remove current baddie from group, get next one?
 // what if the round counter is a visualization of the enemeies left?
 
 // if player wins, how to move to next baddie?
-// round toggle? 
+// round toggle?
 
 // add isAlive to Class?  yes
 
